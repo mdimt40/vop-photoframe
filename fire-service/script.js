@@ -10,11 +10,9 @@ poster.src = 'poster-template.png';
 let uploadedImage = null;
 
 poster.onload = () => {
-  // Set canvas to match the poster size
   canvas.width = 1000;
   canvas.height = 1000;
 
-  // If photo already uploaded, draw both
   if (uploadedImage) {
     drawPoster();
   }
@@ -40,19 +38,18 @@ imageUpload.addEventListener('change', (e) => {
 });
 
 function drawPoster() {
-  // Clear canvas first
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Draw the poster background
   ctx.drawImage(poster, 0, 0, canvas.width, canvas.height);
 
-  // Photo settings
+  if (!uploadedImage) return;
+
   const photoWidth = 300;
   const photoHeight = 300;
-  const offsetX = 50; // 50px from the left edge
-  const offsetY = (canvas.height - photoHeight) / 2; // vertically centered
 
-  // Draw uploaded photo in the corner
+  // Place image on the LEFT-CENTER of the poster
+  const offsetX = 50;
+  const offsetY = (canvas.height - photoHeight) / 2;
+
   ctx.drawImage(uploadedImage, offsetX, offsetY, photoWidth, photoHeight);
 }
 
