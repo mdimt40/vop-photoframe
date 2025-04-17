@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 const downloadBtn = document.getElementById('downloadBtn');
 
 const poster = new Image();
-poster.src = 'poster-template.jpg'; // Replace with your custom poster layout
+poster.src = 'poster-template.png'; // Replace with your custom poster layout
 
 imageUpload.addEventListener('change', function (e) {
   const file = e.target.files[0];
