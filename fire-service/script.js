@@ -9,6 +9,7 @@ poster.src = 'poster-template.png';
 
 let uploadedImage = null;
 
+// When poster loads, set canvas size and draw if image is ready
 poster.onload = () => {
   canvas.width = 1000;
   canvas.height = 1000;
@@ -18,6 +19,7 @@ poster.onload = () => {
   }
 };
 
+// Handle image upload
 imageUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
@@ -37,6 +39,7 @@ imageUpload.addEventListener('change', (e) => {
   }
 });
 
+// Draw poster and photo (in left bottom corner)
 function drawPoster() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(poster, 0, 0, canvas.width, canvas.height);
@@ -46,13 +49,14 @@ function drawPoster() {
   const photoWidth = 300;
   const photoHeight = 300;
 
-  // Place image on the LEFT-CENTER of the poster
-  const offsetX = 50;
-  const offsetY = (canvas.height - photoHeight) / 2;
+  // 🟥 Place image at bottom-left
+  const offsetX = 50; // from left
+  const offsetY = canvas.height - photoHeight - 50; // from bottom
 
   ctx.drawImage(uploadedImage, offsetX, offsetY, photoWidth, photoHeight);
 }
 
+// Download final poster
 downloadBtn.addEventListener('click', () => {
   const link = document.createElement('a');
   link.download = 'my-poster.png';
