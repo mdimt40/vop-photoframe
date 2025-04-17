@@ -141,7 +141,7 @@ canvas.addEventListener('touchcancel', () => {
 
 
 
-<script>
+
 let cropper;
 
 imageUpload.addEventListener('change', (e) => {
@@ -181,4 +181,3 @@ document.getElementById('cropBtn').addEventListener('click', () => {
 
   document.getElementById('cropModal').style.display = 'none';
 });
-</script>
