@@ -7,10 +7,10 @@ const poster = new Image();
 poster.src = 'poster-template.png';
 
 let uploadedImage = null;
-let imageX = 50;
-let imageY = 650; // bottom-left default (canvas.height - photoHeight - 50)
-const photoWidth = 300;
-const photoHeight = 300;
+let imageX = 55;
+let imageY = 640; // bottom-left default (canvas.height - photoHeight - 50)
+const photoWidth = 500;
+const photoHeight = 500;
 
 let isDragging = false;
 let dragOffsetX = 0;
