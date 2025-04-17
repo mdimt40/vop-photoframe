@@ -3,16 +3,45 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const downloadBtn = document.getElementById('downloadBtn');
 
-// 🔁 Updated template filename
+// Load the 1000x1000 poster template
 const poster = new Image();
-poster.src = 'poster-template.png'; // Updated here
+poster.src = 'poster-template.png';
 
-imageUpload.addEventListener('change', function (e) {
+let uploadedImage = null;
+
+poster.onload = () => {
+  // Set canvas to match the poster size
+  canvas.width = 1000;
+  canvas.height = 1000;
+
+  // If photo already uploaded, draw both
+  if (uploadedImage) {
+    drawPoster();
+  }
+};
+
+imageUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
-  reader.onload = function (event) {
-    const uploadedImage = new Image();
+
+  reader.onload = (event) => {
+    uploadedImage = new Image();
     uploadedImage.onload = () => {
-      // Set canvas size to match poster
-      canvas.width = poster.width;
-      canvas.height = poster.height;
+      if (poster.complete) {
+        drawPoster();
+      }
+    };
+    uploadedImage.src = event.target.result;
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+});
+
+function drawPoster() {
+  // Clear canvas first
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw the poster background
+  ctx.drawImage(poster, 0, 0, canvas.width,
