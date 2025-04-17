@@ -7,7 +7,7 @@ const poster = new Image();
 poster.src = 'poster-template.png';
 
 let uploadedImage = null;
-let imageX = 45;
+let imageX = 20;
 let imageY = 640; // bottom-left default (canvas.height - photoHeight - 50)
 const photoWidth = 720;
 const photoHeight = 720;
