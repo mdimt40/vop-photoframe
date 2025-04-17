@@ -2,30 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photo Frame App</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="Logo" class="logo" />
-    <h1>Photo Frame App</h1>
-  </header>
-
-  <main class="container">
-    <label class="upload-label">
-      📁 Upload Your Photo
-      <input type="file" id="imageUpload" accept="image/*" hidden />
-    </label>
-
-    <canvas id="canvas"></canvas>
-
-    <button id="downloadBtn">⬇️ Download Framed Image</button>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Photo Frame App</p>
-  </footer>
+  <div class="container">
+    <h1>📸 Add a Frame to Your Photo</h1>
+    
+    <input type="file" id="imageUpload" accept="image/*" />
+    <canvas id="canvas" width="600" height="600"></canvas>
+    
+    <button id="downloadBtn">Download Framed Image</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
