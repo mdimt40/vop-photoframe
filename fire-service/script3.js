@@ -89,3 +89,40 @@ downloadBtn.addEventListener('click', () => {
   link.href = canvas.toDataURL('image/png');
   link.click();
 });
+// 🎯 Touch events for mobile drag support
+canvas.addEventListener('touchstart', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  if (
+    x >= imageX && x <= imageX + photoWidth &&
+    y >= imageY && y <= imageY + photoHeight
+  ) {
+    isDragging = true;
+    dragOffsetX = x - imageX;
+    dragOffsetY = y - imageY;
+  }
+});
+
+canvas.addEventListener('touchmove', (e) => {
+  if (isDragging) {
+    e.preventDefault(); // Prevent scrolling while dragging
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+
+    imageX = touch.clientX - rect.left - dragOffsetX;
+    imageY = touch.clientY - rect.top - dragOffsetY;
+
+    drawPoster();
+  }
+}, { passive: false });
+
+canvas.addEventListener('touchend', () => {
+  isDragging = false;
+});
+
+canvas.addEventListener('touchcancel', () => {
+  isDragging = false;
+});
