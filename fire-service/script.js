@@ -49,7 +49,7 @@ function drawPoster() {
   // Photo settings
   const photoWidth = 300;
   const photoHeight = 300;
-  const offsetX = canvas.width - photoWidth - 50;  // Right margin
+  const offsetX = canvas.width - photoWidth + 50;  // Right margin
   const offsetY = canvas.height - photoHeight - 50; // Bottom margin
 
   // Draw uploaded photo in the corner
