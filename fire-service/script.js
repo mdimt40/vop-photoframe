@@ -44,4 +44,21 @@ function drawPoster() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw the poster background
-  ctx.drawImage(poster, 0, 0, canvas.width,
+  ctx.drawImage(poster, 0, 0, canvas.width, canvas.height);
+
+  // Photo settings
+  const photoWidth = 300;
+  const photoHeight = 300;
+  const offsetX = canvas.width - photoWidth - 50;  // Right margin
+  const offsetY = canvas.height - photoHeight - 50; // Bottom margin
+
+  // Draw uploaded photo in the corner
+  ctx.drawImage(uploadedImage, offsetX, offsetY, photoWidth, photoHeight);
+}
+
+downloadBtn.addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.download = 'my-poster.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
