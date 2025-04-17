@@ -47,7 +47,7 @@ function drawPoster() {
   
     if (uploadedImage) {
       // Draw white border first
-      const borderPadding = 3;
+      const borderPadding = 2;
       ctx.lineWidth = borderPadding * 2; // total border width
       ctx.strokeStyle = "white";
       ctx.strokeRect(
