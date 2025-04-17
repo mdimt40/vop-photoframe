@@ -4,7 +4,7 @@ const ctx = canvas.getContext('2d');
 const downloadBtn = document.getElementById('downloadBtn');
 
 const poster = new Image();
-poster.src = 'poster-template2.png';
+poster.src = 'poster-template.png';
 
 let uploadedImage = null;
 let imageX = 20;
