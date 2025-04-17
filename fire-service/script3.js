@@ -9,8 +9,8 @@ poster.src = 'poster-template.png';
 let uploadedImage = null;
 let imageX = 45;
 let imageY = 640; // bottom-left default (canvas.height - photoHeight - 50)
-const photoWidth = 700;
-const photoHeight = 700;
+const photoWidth = 750;
+const photoHeight = 7550;
 
 let isDragging = false;
 let dragOffsetX = 0;
