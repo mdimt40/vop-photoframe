@@ -5,23 +5,28 @@ const downloadBtn = document.getElementById('downloadBtn');
 
 let uploadedImage = new Image();
 const frameImage = new Image();
-frameImage.src = 'frame.png'; // Make sure your frame.png has transparency and is the same size as the canvas
+frameImage.src = 'frame.png'; // Make sure your frame is high-res and transparent
 
 imageUpload.addEventListener('change', function (e) {
   const file = e.target.files[0];
   const reader = new FileReader();
   reader.onload = function (event) {
     uploadedImage.onload = () => {
-      // Draw uploaded image
+      // Resize canvas to match uploaded image
+      canvas.width = uploadedImage.width;
+      canvas.height = uploadedImage.height;
+
+      // Draw the uploaded image
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(uploadedImage, 0, 0, canvas.width, canvas.height);
-      // Draw the frame on top
-      frameImage.onload = () => {
-        ctx.drawImage(frameImage, 0, 0, canvas.width, canvas.height);
-      };
-      // If frame already loaded
+
+      // Draw the frame (scale it to fit the canvas)
       if (frameImage.complete) {
         ctx.drawImage(frameImage, 0, 0, canvas.width, canvas.height);
+      } else {
+        frameImage.onload = () => {
+          ctx.drawImage(frameImage, 0, 0, canvas.width, canvas.height);
+        };
       }
     };
     uploadedImage.src = event.target.result;
@@ -35,3 +40,4 @@ downloadBtn.addEventListener('click', () => {
   link.href = canvas.toDataURL();
   link.click();
 });
+
