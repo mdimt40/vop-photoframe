@@ -211,7 +211,7 @@
   }
 /* Landscape image styles */
 .tutorial-image.landscape {
-  margin: 25px auto;
+  margin:  auto;
   max-width: 100%;
   text-align: center;
   overflow: hidden;
@@ -220,10 +220,12 @@
 }
 
 .tutorial-image.landscape img {
+      margin:  auto;
   width: 100%;
   height: auto;
   max-width: 1500px;
   display: block;
+align:center;
 }
 
 /* Responsive adjustments */
