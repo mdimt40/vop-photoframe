@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>দুমকীতে ফায়ার সার্ভিস ও সিভিল ডিফেন্স স্টেশন চাই</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+</head>
+<body>
+  <!-- White Header with Logo Only -->
+  <header class="logo-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="Logo" class="logo" />
+    </div>
+  </header>
+
+  <!-- Red Content Section -->
+  <section class="red-content">
+    <h1>দুমকীতে ফায়ার সার্ভিস স্টেশন চাই, পোস্টার</h1>
+    <p class="bio">পটুয়াখালী জেলার সবথেকে ছোট উপজেলা দুমকী হলেও এখানে ৮৪,৫৬৫ এর বেশি মানুষ এর বসবাস এবং পটুয়াখালী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়। 
+সাথেই রয়েছে বরিশাল সেনানিবাস (পটুয়াখালী সেনানিবাস) সকল দিক বিবেচনায় ফায়ার স্টেশনে এখন দুমকি উপজেলার জন্য গুরুত্বপূর্ণ হয়ে দাঁড়িয়েছে।</p>
+    
+    <h2><i class="fas fa-question-circle"></i> কিভাবে আপনার ছবি দিয়ে পোস্টার তৈরি করবেন?</h2>
+    <ul>
+      <li>Upload Image এ ক্লিক করুন</li>
+      <li>আপনার পছন্দ মত ছবি সেট করুন (ছবিটির ১.১ অথবা ৪.৫ ফ্রেম সাইজ এর দিন)</li>
+      <li>ডিজাইনে আপনাকে দেখতে সুন্দর লাগছে তাহলে ডাউনলোড করুন এবং ফেসবুকে পোস্ট করুন</li>
+    </ul>
+    
+    <p class="bio">পোস্টে Voice of Patuakhali পেজ ম্যানশন করতে ভুলবেন না। 
+      ছবিটির সাথে চাইলে নিচের হ্যাসট্যাগ গুলো যুক্ত করতে পারেন ↓</p>
+    
+    <div class="hashtags">
+      <span class="hashtag">#দুমকীতে_ফায়ার_স্টেশন_চাই</span>
+      <span class="hashtag">#Dumki_fire_station</span>
+      <span class="hashtag">#voice_of_patuakhali</span>
+    </div>
+  </section>
+
+  <main class="container">
+    <label class="upload-label">
+      <i class="fas fa-upload"></i> আপলোড
+      <input type="file" id="imageUpload" accept="image/*" hidden />
+    </label>
+
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+
+<div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000cc; justify-content:center; align-items:center; z-index:999;">
+  <div style="background:white; padding:20px; border-radius:10px; max-width:90vw;">
+    <img id="cropImage" style="max-width:100%; max-height:70vh;" />
+    <br><br>
+    <button id="cropBtn">Crop & Apply</button>
+  </div>
+</div>
+    <button id="downloadBtn">
+      <i class="fas fa-download"></i> পোস্টার ডাউনলোড করতে এখানে ক্লিক করুন
+    </button>
+  </main>
+
+  <p class="support-text">
+    প্রচারে : দুমকী উপজেলাবাসী<br>
+    সহযোগিতায় : ভয়েস অফ পটুয়াখালী
+  </p>
+
+  <footer>
+    <p>&copy; 2025 Voice of Patuakhali</p>
+  
+  </footer>
+
+  <script src="script3.js"></script>
+</body>
+</html>
