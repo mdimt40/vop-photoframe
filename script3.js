@@ -141,3 +141,32 @@ canvas.addEventListener('touchcancel', () => {
 
 
 
+
+document.getElementById('shareToFB').addEventListener('click', function() {
+    // First save the image
+    const canvas = document.getElementById('canvas');
+    const imgData = canvas.toDataURL('image/png');
+    
+    // Upload to temporary hosting or convert to blob
+    canvas.toBlob(function(blob) {
+        const formData = new FormData();
+        formData.append('image', blob, 'fire-station-poster.png');
+        
+        // You would need a server endpoint to host the image temporarily
+        // This is required because Facebook needs a public URL to share
+        fetch('your-server-upload-endpoint', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Now share using Facebook API
+            FB.ui({
+                method: 'share',
+                href: data.imageUrl,
+                quote: 'দুমকীতে ফায়ার সার্ভিস স্টেশন চাই - Voice of Patuakhali',
+                hashtag: '#দুমকীতে_ফায়ার_স্টেশন_চাই'
+            }, function(response){});
+        });
+    }, 'image/png');
+});
