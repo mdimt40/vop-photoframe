@@ -142,31 +142,43 @@ canvas.addEventListener('touchcancel', () => {
 
 
 
-document.getElementById('shareToFB').addEventListener('click', function() {
-    // First save the image
+document.getElementById('nativeShareBtn').addEventListener('click', async () => {
     const canvas = document.getElementById('canvas');
-    const imgData = canvas.toDataURL('image/png');
     
-    // Upload to temporary hosting or convert to blob
-    canvas.toBlob(function(blob) {
-        const formData = new FormData();
-        formData.append('image', blob, 'fire-station-poster.png');
-        
-        // You would need a server endpoint to host the image temporarily
-        // This is required because Facebook needs a public URL to share
-        fetch('your-server-upload-endpoint', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Now share using Facebook API
-            FB.ui({
-                method: 'share',
-                href: data.imageUrl,
-                quote: 'দুমকীতে ফায়ার সার্ভিস স্টেশন চাই - Voice of Patuakhali',
-                hashtag: '#দুমকীতে_ফায়ার_স্টেশন_চাই'
-            }, function(response){});
-        });
+    // Check if canvas is empty
+    if (canvas.toDataURL() === document.createElement('canvas').toDataURL()) {
+        alert('Please upload an image first!');
+        return;
+    }
+
+    // Convert canvas to blob
+    canvas.toBlob(async (blob) => {
+        try {
+            // Create a temporary file
+            const file = new File([blob], 'fire-station-poster.png', { type: 'image/png' });
+            
+            // Check if Web Share API is supported
+            if (navigator.share && navigator.canShare) {
+                // Prepare share data
+                const shareData = {
+                    title: 'দুমকীতে ফায়ার সার্ভিস স্টেশন চাই',
+                    text: 'আমাদের দুমকীতে ফায়ার সার্ভিস স্টেশন প্রয়োজন! #দুমকীতে_ফায়ার_স্টেশন_চাই',
+                    files: [file],
+                };
+
+                // Share the file (works on mobile)
+                await navigator.share(shareData);
+            } else {
+                // Fallback for desktop browsers (opens share popup)
+                const shareUrl = window.location.href;
+                window.open(
+                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+                    '_blank'
+                );
+            }
+        } catch (err) {
+            console.error('Sharing failed:', err);
+            alert('Sharing is not supported in this browser. Please download and share manually.');
+        }
     }, 'image/png');
 });
