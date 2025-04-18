@@ -243,3 +243,20 @@ align:center;
     margin-right: -auto;
   }
 }
+.share-button {
+    background: #25D366; /* WhatsApp green color */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    margin: 15px 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.share-button:hover {
+    background: #128C7E;
+}
