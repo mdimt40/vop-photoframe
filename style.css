@@ -239,7 +239,7 @@ align:center;
   .tutorial-image.landscape {
     max-width: 100%;
     border-radius: 0;
-    margin-left: -20px;
-    margin-right: -20px;
+    margin-left: auto;
+    margin-right: -auto;
   }
 }
