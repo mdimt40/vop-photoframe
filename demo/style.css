@@ -168,6 +168,39 @@ canvas {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+#cropModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000cc;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#cropModal > div {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+#cropImage {
+  max-width: 100%;
+  max-height: 60vh;
+  display: block;
+  margin: 0 auto;
+}
+
 /* Button */
 button {
   margin-top: 25px;
@@ -225,5 +258,19 @@ footer {
 
   .name-section input {
     width: 100%;
+  }
+}
+@media (max-width: 480px) {
+  #cropImage {
+    max-height: 50vh;
+  }
+
+  #cropModal > div {
+    padding: 10px;
+  }
+
+  #cropBtn {
+    width: 100%;
+    margin-top: 10px;
   }
 }
