@@ -11,7 +11,7 @@ let uploadedImage = new Image();
 
 // ✅ Control image position and size here:
 let imageX = 120;
-let imageY = 430;
+let imageY = 420;
 let photoWidth = 480;
 let photoHeight = 480;
 
@@ -80,25 +80,45 @@ function drawPoster() {
     uploadedImage.naturalWidth > 0 &&
     uploadedImage.naturalHeight > 0
   ) {
-    const borderPadding = 2;
-    ctx.lineWidth = borderPadding * 2;
-    ctx.strokeStyle = "white";
-    ctx.strokeRect(
-      imageX - borderPadding,
-      imageY - borderPadding,
-      photoWidth + borderPadding * 2,
-      photoHeight + borderPadding * 2
-    );
+   // Add shadow BEFORE drawing the image
+ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+ctx.shadowBlur = 9;
+ctx.shadowOffsetX = 10;
+ctx.shadowOffsetY = 10;
 
-    ctx.drawImage(uploadedImage, imageX, imageY, photoWidth, photoHeight);
+ctx.drawImage(uploadedImage, imageX, imageY, photoWidth, photoHeight);
+
+// Reset shadow so it doesn’t affect the border
+ctx.shadowColor = 'transparent';
+ctx.shadowBlur = 0;
+ctx.shadowOffsetX = 0;
+ctx.shadowOffsetY = 0;
+
+// Now draw white border ABOVE image (not affected by shadow)
+const borderPadding = 2;
+ctx.lineWidth = borderPadding * 2;
+ctx.strokeStyle = "white";
+ctx.strokeRect(
+  imageX - borderPadding,
+  imageY - borderPadding,
+  photoWidth + borderPadding * 2,
+  photoHeight + borderPadding * 2
+);
+
+  
+    // 🔁 Reset shadow after drawing the image
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
   }
-
+  
   const name = nameInput.value.trim();
   if (name) {
     ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
     ctx.fillStyle = 'white';
     ctx.textAlign = 'center';
-    ctx.fillText(name, canvas.width / 2, 995);
+    ctx.fillText('সহযোগিতায়ঃ ' + name, canvas.width / 2, 970);
   }
 }
 
