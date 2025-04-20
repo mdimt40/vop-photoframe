@@ -239,18 +239,18 @@ const extraInput = document.getElementById('extraInput');
 const name = nameInput.value.trim();
 const extraText = extraInput.value.trim();
 
-if (template === 'poster-template2.png') {
+if (template === 'poster-template-2.png') {
   if (name) {
-    ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
+    ctx.font = 'bold 38px "Hind Siliguri", sans-serif';
     ctx.fillStyle = '#000000';
     ctx.textAlign = 'center';
-    ctx.fillText(name, 800, 400);
+    ctx.fillText(name, 800, 430);
   }
   if (extraText) {
     ctx.font = 'bold 32px "Hind Siliguri", sans-serif';
     ctx.fillStyle = '#444444';
     ctx.textAlign = 'center';
-    ctx.fillText(extraText, 800, 450);
+    ctx.fillText(extraText, 800, 480);
   }
 }
 
