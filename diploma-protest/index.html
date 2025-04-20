@@ -236,13 +236,24 @@ const extraInput = document.getElementById('extraInput');
   ctx.drawImage(poster, 0, 0, canvas.width, canvas.height);
 
   // Only show name for template 1
-  const name = nameInput.value.trim();
-if (template === 'poster-template-2.png' && name) {
-  ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
-  ctx.fillStyle = '#000000';
-  ctx.textAlign = 'center';
-  ctx.fillText( name,800,400); // You can adjust the Y position here
+const name = nameInput.value.trim();
+const extraText = extraInput.value.trim();
+
+if (template === 'poster-template.png') {
+  if (name) {
+    ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
+    ctx.fillStyle = '#000000';
+    ctx.textAlign = 'center';
+    ctx.fillText(name, 800, 400);
+  }
+  if (extraText) {
+    ctx.font = 'bold 32px "Hind Siliguri", sans-serif';
+    ctx.fillStyle = '#444444';
+    ctx.textAlign = 'center';
+    ctx.fillText(extraText, 800, 450);
+  }
 }
+
 
 }
 
