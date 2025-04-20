@@ -258,7 +258,8 @@ if (template === 'poster-template.png') {
 }
 
 
-    [nameInput, templateSelect].forEach(el => el.addEventListener('input', drawPoster));
+[nameInput, extraInput, templateSelect].forEach(el => el.addEventListener('input', drawPoster));
+
 
     downloadBtn.addEventListener('click', () => {
       drawPoster();
