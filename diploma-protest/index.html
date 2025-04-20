@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>দুমকীতে ফায়ার সার্ভিস পোস্টার</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <style>
+      body {
+    font-family: 'Hind Siliguri', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f9f9f9;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+  }
+
+  #canvas {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  #cropModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #cropModal > div {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 90vw;
+    max-height: 90vh;
+    text-align: center;
+    overflow: auto;
+  }
+
+  #cropImage {
+    max-width: 100%;
+    max-height: 60vh;
+    height: auto;
+  }
+
+  #cropBtn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #d62828;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #cropBtn:hover {
+    background: #a31d1d;
+  }
+
+  .upload-label {
+    background: #D22727;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 10px 0;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+  </style>
+</head>
+<body>
+  <div class="logo-header">
+    <img src="logo.png" alt="Logo" class="logo">
+  </div>
+
+  <div class="intro-text">
+    <p>কারিগরি শিক্ষার মর্যাদা, চাকরির নিশ্চয়তা ও ন্যায্য অধিকার প্রতিষ্ঠার দাবিতে সারা দেশে পলিটেকনিক শিক্ষার্থীদের ৬ দফা দাবি আদায় আন্দোলন করে যাচ্ছে।<br>
+    এই আন্দোলন এর সাথে একাত্মতা জানাতে পারেন আপনিও..!</p>
+  
+    <h3>কিভাবে আপনার ছবি দিয়ে পোস্টার তৈরি করবেন?</h3>
+    <ul>
+      <li>Upload Image এ ক্লিক করুন</li>
+      <li>আপনার পছন্দ মত ছবি সেট করুন (ছবিটির ১.১ অথবা ৪.৫ ফ্রেম সাইজ এর দিন)</li>
+      <li>ডিজাইনে আপনাকে দেখতে সুন্দর লাগছে তাহলে ডাউনলোড করুন এবং ফেসবুকে পোস্ট করুন।</li>
+    </ul>
+  
+    <p><strong>ফেসবুক প্রোফাইল মন্তব্য/নাম :</strong></p>
+    <p>পোস্টে <strong>Voice of Patuakhali</strong> পেইজ ম্যানশন করতে ভুলবেন না। ছবিটির সাথে চাইলে নিচের হ্যাসট্যাগ গুলো যুক্ত করতে পারেন ↓</p>
+  
+    <div class="hashtags">
+      <span class="hashtag">#polytechnicstudents</span>
+      <span class="hashtag">#Polytechnic</span>
+      <span class="hashtag">#diploma_engineering</span>
+      <span class="hashtag">#voice_of_Patuakhali</span>
+    </div>
+  </div>
+  
+  <div class="container">
+    <label for="nameInput">নাম:</label>
+    <input type="text" id="nameInput" placeholder="আপনার নাম লিখুন" />
+
+    <br><br>
+
+    <label for="templateSelect">টেমপ্লেট নির্বাচন করুন:</label>
+    <select id="templateSelect">
+      <option value="poster-template.png">টেমপ্লেট ১ (নাম সহ)</option>
+      <option value="poster-template-2.png">টেমপ্লেট ২ (নাম ছাড়া)</option>
+    </select>
+
+    <br><br>
+
+    <label class="upload-label">
+      ছবি আপলোড করুন
+      <input type="file" id="imageUpload" accept="image/*" />
+    </label>
+
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+
+    <div id="cropModal">
+      <div>
+        <img id="cropImage" />
+        <br>
+        <button id="cropBtn">Crop & Apply</button>
+      </div>
+    </div>
+
+    <button id="downloadBtn">পোস্টার ডাউনলোড করুন</button>
+  </div>
+
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const nameInput = document.getElementById('nameInput');
+    const templateSelect = document.getElementById('templateSelect');
+    const cropModal = document.getElementById('cropModal');
+    const cropImage = document.getElementById('cropImage');
+    const cropBtn = document.getElementById('cropBtn');
+
+    let poster = new Image();
+    poster.src = templateSelect.value;
+
+    let uploadedImage = new Image();
+    let cropper;
+
+    // Default positioning
+    let imageX = 100, imageY = 400, photoWidth = 300, photoHeight = 300;
+
+    templateSelect.addEventListener('change', () => {
+      poster.src = templateSelect.value;
+      updateTemplateSettings();
+    });
+
+    poster.onload = () => {
+      drawPoster();
+    };
+
+    function updateTemplateSettings() {
+      const selected = templateSelect.value;
+      if (selected === 'poster-template.png') {
+        imageX = 00;
+        imageY =00;
+        photoWidth = 1000;
+        photoHeight = 1000;
+      } else if (selected === 'poster-template-2.png') {
+        imageX = 60;
+        imageY = 420;
+        photoWidth = 525;
+        photoHeight = 525;
+      }
+      drawPoster();
+    }
+
+    imageUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        cropImage.src = event.target.result;
+        cropModal.style.display = 'flex';
+
+        cropImage.onload = () => {
+          if (cropper) cropper.destroy();
+          cropper = new Cropper(cropImage, { aspectRatio: 1, viewMode: 1 });
+        };
+      };
+      reader.readAsDataURL(file);
+    });
+
+    cropBtn.addEventListener('click', () => {
+      if (!cropper) return;
+      const croppedCanvas = cropper.getCroppedCanvas({ width: photoWidth, height: photoHeight });
+      uploadedImage = new Image();
+      uploadedImage.onload = drawPoster;
+      uploadedImage.src = croppedCanvas.toDataURL('image/png');
+      cropModal.style.display = 'none';
+      cropper.destroy();
+    });
+
+    function drawPoster() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const template = templateSelect.value;
+
+  // Always draw user image first (in the background)
+  if (uploadedImage.src) {
+    ctx.drawImage(uploadedImage, imageX, imageY, photoWidth, photoHeight);
+  }
+
+  // Draw poster on top for both templates
+  ctx.drawImage(poster, 0, 0, canvas.width, canvas.height);
+
+  // Only show name for template 1
+  const name = nameInput.value.trim();
+if (template === 'poster-template-2.png' && name) {
+  ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
+  ctx.fillStyle = '#000000';
+  ctx.textAlign = 'center';
+  ctx.fillText( name,800,400); // You can adjust the Y position here
+}
+
+}
+
+
+    [nameInput, templateSelect].forEach(el => el.addEventListener('input', drawPoster));
+
+    downloadBtn.addEventListener('click', () => {
+      drawPoster();
+      const link = document.createElement('a');
+      link.download = 'poster.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    updateTemplateSettings();
+  </script>
+</body>
+</html>
