@@ -5,7 +5,7 @@ const downloadBtn = document.getElementById('downloadBtn');
 const nameInput = document.getElementById('nameInput');
 
 const poster = new Image();
-poster.src = 'poster-template.png';
+poster.src = 'https://vop.mdimtiaz.site/demo/poster-template.png';
 
 let uploadedImage = new Image();
 
