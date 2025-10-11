@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>দুমকীতে ফায়ার সার্ভিস স্টেশন চাই</title>
+    <!-- Fonts for Bangla -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Cropper.js for image manipulation -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    
+    <style>
+        /* Styles adapted from the original project and sample poster */
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .logo-header {
+            background-color: white;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .logo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .logo {
+            height: 40px; /* Placeholder size */
+            width: auto;
+            /* Using a placeholder for logo.png */
+            content: url("https://placehold.co/150x40/ffffff/000?text=Voice+of+Patuakhali");
+        }
+        .red-content {
+            background-color: #d63031; /* Bright red tone */
+            color: white;
+            padding: 20px 20px 40px;
+        }
+        .red-content h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .red-content .bio {
+            max-width: 800px;
+            margin: 10px auto 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .red-content h2 {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .red-content ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 10px auto 20px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .red-content ul li {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        .hashtags {
+            margin-top: 15px;
+        }
+        .hashtag {
+            display: inline-block;
+            background: #ffffff;
+            color: #d63031;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            margin: 5px;
+            font-size: 0.85rem;
+        }
+        .container {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .upload-label {
+            display: inline-flex;
+            align-items: center;
+            background-color: #1e40af; /* Blue button */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .upload-label:hover {
+            background-color: #1d3999;
+        }
+        .upload-label i {
+            margin-right: 8px;
+        }
+        #canvas {
+            border: 5px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: auto;
+            max-width: 500px; /* Limit canvas size for display */
+            aspect-ratio: 1/1; /* Square ratio, as suggested */
+            display: block;
+            margin: 20px auto;
+        }
+        #downloadBtn {
+            background-color: #049f50; /* Green button */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        #downloadBtn:hover {
+            background-color: #037f40;
+        }
+        #downloadBtn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .support-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: #ccc;
+            padding: 10px 0;
+            font-size: 0.8rem;
+            margin-top: 40px;
+        }
+        
+        /* Cropper Modal Styles */
+        #cropModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000cc;
+            display: none; /* Controlled by JS */
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        #cropModal .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: auto;
+        }
+        #cropBtn {
+            background-color: #049f50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        #cropBtn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #statusMessage {
+            color: #d63031;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- White Header with Logo Only -->
+    <header class="logo-header">
+        <div class="logo-container">
+            <!-- logo.png placeholder -->
+            <img src="https://placehold.co/150x40/ffffff/000?text=VOP+Logo" alt="Logo" class="logo" />
+        </div>
+    </header>
+
+    <!-- Red Content Section -->
+    <section class="red-content">
+        <h1>দুমকীতে ফায়ার সার্ভিস স্টেশন চাই, পোস্টার</h1>
+        <p class="bio">পটুয়াখালী জেলার সবথেকে ছোট উপজেলা দুমকী হলেও এখানে ৮৪,৫৬৫ এর বেশি মানুষ এর বসবাস এবং পটুয়াখালী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়। 
+        সাথেই রয়েছে বরিশাল সেনানিবাস (পটুয়াখালী সেনানিবাস) সকল দিক বিবেচনায় ফায়ার স্টেশনে এখন দুমকি উপজেলার জন্য গুরুত্বপূর্ণ হয়ে দাঁড়িয়েছে।</p>
+        
+        <h2><i class="fas fa-question-circle"></i> কিভাবে আপনার ছবি দিয়ে পোস্টার তৈরি করবেন?</h2>
+        <ul>
+            <li>**আপলোড (Upload)** বাটনে ক্লিক করে আপনার ছবি নির্বাচন করুন।</li>
+            <li>ক্রপিং টুল ব্যবহার করে ছবিটি **৪:৫ অনুপাতে** সেট করুন।</li>
+            <li>**Crop & Apply** বাটনে ক্লিক করলে AI ব্যাকগ্রাউন্ড রিমুভ করে ছবিটি পোস্টারে সেট করে দেবে।</li>
+            <li>ডিজাইনে আপনাকে দেখতে সুন্দর লাগলে **পোস্টার ডাউনলোড** করুন এবং ফেসবুকে পোস্ট করুন।</li>
+        </ul>
+        
+        <p class="bio">পোস্টে Voice of Patuakhali পেজ ম্যানশন করতে ভুলবেন না। 
+            ছবিটির সাথে চাইলে নিচের হ্যাসট্যাগ গুলো যুক্ত করতে পারেন ↓</p>
+        
+        <div class="hashtags">
+            <span class="hashtag">#দুমকীতে_ফায়ার_স্টেশন_চাই</span>
+            <span class="hashtag">#Dumki_fire_station</span>
+            <span class="hashtag">#voice_of_patuakhali</span>
+        </div>
+    </section>
+
+    <main class="container">
+        <label class="upload-label">
+            <i class="fas fa-upload"></i> আপলোড
+            <input type="file" id="imageUpload" accept="image/png, image/jpeg" hidden />
+        </label>
+        
+        <p id="statusMessage">ছবি আপলোড করার জন্য অপেক্ষা করছি...</p>
+
+        <canvas id="canvas" width="1000" height="1000"></canvas>
+
+        <div id="cropModal">
+            <div class="modal-content">
+                <img id="cropImage" />
+                <br><br>
+                <button id="cropBtn" disabled>Crop & Apply</button>
+            </div>
+        </div>
+        
+        <button id="downloadBtn" disabled>
+            <i class="fas fa-download"></i> পোস্টার ডাউনলোড করতে এখানে ক্লিক করুন
+        </button>
+    </main>
+
+    <p class="support-text">
+        প্রচারে : দুমকী উপজেলাবাসী<br>
+        সহযোগিতায় : ভয়েস অফ পটুয়াখালী
+    </p>
+
+    <footer>
+        <p>&copy; 2025 Voice of Patuakhali</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- API CONFIGURATION ---
+        // Zylalabs Human Background Removal API details
+        const BEARER_TOKEN = "10596|Ayal26XqnUC6ZV2Mre3pj0HyrLiDL8hM1t9BHVKQ";
+        const API_ENDPOINT = "https://zylalabs.com/api/4405/human+background+removal+api/5414/human+background+removal"; 
+        // -------------------------
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const imageUpload = document.getElementById('imageUpload');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const cropModal = document.getElementById('cropModal');
+        const cropImage = document.getElementById('cropImage');
+        const cropBtn = document.getElementById('cropBtn');
+
+        let cropper = null;
+        let finalCutoutUrl = null;
+
+        // --- Utility Functions ---
+
+        /**
+         * Converts a data URL (Base64) to a Blob object.
+         * @param {string} dataurl - The data URL string.
+         * @param {string} filename - The desired filename for the resulting File.
+         * @returns {File} A File object.
+         */
+        function dataURLtoFile(dataurl, filename) {
+            const arr = dataurl.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, { type: mime });
+        }
+
+
+        // --- Cropping and Image Upload Logic ---
+
+        imageUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                statusMessage.textContent = "ছবি ক্রপ করার জন্য অপেক্ষা করছে...";
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    cropModal.style.display = 'flex';
+                    cropImage.src = event.target.result;
+                    cropBtn.disabled = false;
+                    
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    
+                    // Initialize Cropper.js
+                    cropper = new Cropper(cropImage, {
+                        aspectRatio: 4 / 5, // Recommended aspect ratio
+                        viewMode: 1, // Restrict the crop box to not exceed the canvas
+                        background: false,
+                        ready() {
+                            // Ensure the image is ready before enabling the button
+                            cropBtn.disabled = false;
+                        }
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        cropBtn.addEventListener('click', async () => {
+            if (!cropper) return;
+
+            cropBtn.disabled = true;
+            statusMessage.textContent = "ছবি ক্রপ করা হচ্ছে...";
+
+            // 1. Get cropped data URL (PNG format for best quality)
+            const croppedDataUrl = cropper.getCroppedCanvas({
+                width: 800, // Processed crop size for better quality
+                height: 1000,
+            }).toDataURL('image/png');
+
+            // 2. Convert Data URL to a File object for API upload
+            const croppedFile = dataURLtoFile(croppedDataUrl, 'cropped_subject.png');
+
+            // 3. Hide the modal and destroy cropper instance
+            cropModal.style.display = 'none';
+            cropper.destroy();
+            cropper = null;
+
+            // 4. Call the API
+            await sendForBackgroundRemoval(croppedFile);
+        });
+
+
+        // --- API Integration Logic ---
+
+        async function sendForBackgroundRemoval(file) {
+            statusMessage.textContent = "AI দ্বারা ব্যাকগ্রাউন্ড অপসারণ করা হচ্ছে... (কিছু সময় লাগতে পারে)";
+            downloadBtn.disabled = true;
+
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('return_form', 'optional'); // API specific param
+
+                let response = null;
+                const maxRetries = 3;
+
+                // Exponential Backoff for robust API communication
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        response = await fetch(API_ENDPOINT, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${BEARER_TOKEN}`,
+                            },
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            break;
+                        } else if (response.status === 429) {
+                            console.warn(`Rate limit (429) hit. Retrying in ${Math.pow(2, i)} seconds...`);
+                            if (i < maxRetries - 1) {
+                                await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                            } else {
+                                throw new Error("API Rate limit exceeded after multiple retries.");
+                            }
+                        } else {
+                            throw new Error(`API returned status ${response.status}: ${response.statusText}`);
+                        }
+                    } catch (error) {
+                        if (i === maxRetries - 1) throw error;
+                        await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                    }
+                }
+
+                if (!response || !response.ok) {
+                    throw new Error("API থেকে সফল উত্তর পাওয়া যায়নি।");
+                }
+
+                const result = await response.json();
+                
+                // Extract the confirmed image URL: result.data.image_url
+                const processedImageUrl = result.data?.image_url;
+                
+                if (processedImageUrl) {
+                    finalCutoutUrl = processedImageUrl;
+                    statusMessage.textContent = "ব্যাকগ্রাউন্ড সফলভাবে অপসারণ করা হয়েছে! পোস্টার তৈরি হচ্ছে...";
+                    await drawPoster(finalCutoutUrl);
+                    downloadBtn.disabled = false;
+                    statusMessage.textContent = "পোস্টার তৈরি সম্পন্ন! ডাউনলোড করার জন্য প্রস্তুত।";
+                } else {
+                    const errorMsg = result.error_detail?.message || JSON.stringify(result, null, 2);
+                    statusMessage.textContent = `ত্রুটি: ব্যাকগ্রাউন্ড অপসারণ সফল হলেও ছবির URL খুঁজে পাওয়া যায়নি।`;
+                    console.error("API Result Missing URL:", errorMsg);
+                }
+
+            } catch (error) {
+                statusMessage.textContent = `প্রক্রিয়াকরণে ব্যর্থতা। কনসোল দেখুন।`;
+                console.error("Background removal error:", error);
+            } finally {
+                cropBtn.disabled = false;
+            }
+        }
+
+
+        // --- Canvas Drawing and Compositing Logic ---
+
+        // Fixed text and template elements
+        const TEMPLATE_TEXT = {
+            mainTitle: "পটুয়াখালী'র",
+            subTitle: "দুমকী উপজেলায়\nফায়ার সার্ভিস ও\nসিভিল ডিফেন্স",
+            callToAction: "স্টেশন চাই",
+            logoText: "VOICE\nOF PATUAKHALI"
+        };
+        
+        /**
+         * Draws the final poster composite onto the canvas.
+         * @param {string} cutoutUrl - URL of the transparent cutout image.
+         */
+        async function drawPoster(cutoutUrl) {
+            const CW = canvas.width;
+            const CH = canvas.height;
+            ctx.clearRect(0, 0, CW, CH);
+
+            // 1. Draw Mock Fire Truck / Top Graphic (Dark Red/Black)
+            ctx.fillStyle = "#333333";
+            ctx.fillRect(0, 0, CW, CH * 0.45); // Top 45% for fire truck image
+
+            // Add simple white lines to suggest the fire truck body
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(CW * 0.1, CH * 0.25, CW * 0.5, CH * 0.05);
+
+            // 2. Draw Main Background Color (Light Beige/Pink)
+            ctx.fillStyle = "#F5F0F0"; // Light, warm background color
+            ctx.fillRect(0, CH * 0.45, CW, CH * 0.55);
+            
+            // 3. Draw the API Cutout Image (Foreground Subject)
+            try {
+                const cutoutImg = await new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.crossOrigin = 'Anonymous'; // Essential for external images
+                    img.onload = () => resolve(img);
+                    img.onerror = reject;
+                    img.src = cutoutUrl;
+                });
+
+                // Position the cutout image on the left side, slightly overlapping the top section
+                const imgW = CW * 0.45; // 45% width of canvas
+                const imgH = CH * 0.65; // 65% height of canvas
+                const imgX = CW * 0.05; // 5% margin from left
+                const imgY = CH * 0.35; // Start drawing from 35% down
+
+                // Draw the cutout
+                ctx.drawImage(cutoutImg, imgX, imgY, imgW, imgH);
+                
+                // Draw a white border around the cutout (mimics the user's sample)
+                ctx.strokeStyle = '#FFFFFF';
+                ctx.lineWidth = 20; // Thicker border
+                // Use a path to mimic the slightly rounded/soft edge look
+                ctx.beginPath();
+                ctx.rect(imgX - 10, imgY - 10, imgW + 20, imgH + 20);
+                ctx.stroke();
+
+            } catch (e) {
+                console.error("Failed to load or draw cutout image:", e);
+                // Draw a placeholder if the cutout fails
+                ctx.fillStyle = "#FFDDDD";
+                ctx.fillRect(CW * 0.05, CH * 0.4, CW * 0.4, CH * 0.55);
+                ctx.fillStyle = "#D63031";
+                ctx.font = `bold ${CW * 0.03}px 'Hind Siliguri'`;
+                ctx.textAlign = 'center';
+                ctx.fillText("ছবি লোড হয়নি", CW * 0.25, CH * 0.65);
+            }
+
+            // 4. Draw Campaign Text (Right Side)
+            ctx.textAlign = 'right';
+            
+            // Main Title
+            ctx.fillStyle = "#D63031"; // Red color for main text
+            ctx.font = `bold ${CW * 0.05}px 'Hind Siliguri'`;
+            ctx.fillText(TEMPLATE_TEXT.mainTitle, CW * 0.9, CH * 0.55);
+
+            // Sub Title / Body Text (Line by line)
+            ctx.font = `bold ${CW * 0.065}px 'Hind Siliguri'`;
+            const lines = TEMPLATE_TEXT.subTitle.split('\n');
+            let y = CH * 0.61;
+            lines.forEach((line) => {
+                ctx.fillText(line, CW * 0.9, y);
+                y += CW * 0.075;
+            });
+
+            // Call to Action (Big Red Button Look)
+            ctx.fillStyle = "#D63031"; 
+            ctx.fillRect(CW * 0.6, y + (CW * 0.01), CW * 0.3, CW * 0.08); // Red box
+            
+            ctx.fillStyle = "#FFFFFF"; // White text inside box
+            ctx.font = `bold ${CW * 0.045}px 'Hind Siliguri'`;
+            ctx.fillText(TEMPLATE_TEXT.callToAction, CW * 0.75, y + (CW * 0.065));
+
+            // 5. Draw Voice of Patuakhali Logo Text (Bottom Right)
+            ctx.textAlign = 'center';
+            ctx.font = `bold ${CW * 0.025}px 'Hind Siliguri'`;
+            ctx.fillStyle = "#D63031"; 
+            
+            // "VOICE" part
+            ctx.fillText("V O I C E", CW * 0.75, CH * 0.91);
+            
+            // Divider line
+            ctx.strokeStyle = "#D63031";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(CW * 0.75 - 50, CH * 0.92);
+            ctx.lineTo(CW * 0.75 + 50, CH * 0.92);
+            ctx.stroke();
+
+            // "OF PATUAKHALI" part
+            ctx.font = `bold ${CW * 0.03}px 'Hind Siliguri'`;
+            ctx.fillText("OF PATUAKHALI", CW * 0.75, CH * 0.96);
+        }
+
+
+        // --- Download Logic ---
+
+        downloadBtn.addEventListener('click', () => {
+            if (!finalCutoutUrl) {
+                statusMessage.textContent = "দয়া করে আগে ছবিটি তৈরি করুন।";
+                return;
+            }
+            downloadBtn.disabled = true;
+            statusMessage.textContent = "পোস্টার ডাউনলোড হচ্ছে...";
+            
+            const link = document.createElement('a');
+            link.download = `দুমকীতে_ফায়ার_সার্ভিস_স্টেশন_চাই_পোস্টার.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            downloadBtn.disabled = false;
+            statusMessage.textContent = "ডাউনলোড সম্পন্ন।";
+        });
+
+    </script>
+</body>
+</html>
