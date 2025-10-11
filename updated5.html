@@ -277,8 +277,8 @@
     <!-- White Header with Logo Only -->
     <header class="logo-header">
         <div class="logo-container">
-            <!-- Used placeholder for logo.png (Updated size to 250x40 based on CSS) -->
-            <img src="https://placehold.co/250x40/ffffff/D62828?text=Voice+of+Patuakhali" alt="Logo" class="logo" />
+            <!-- logo.png reference restored. NOTE: This image file must be accessible to run locally. -->
+            <img src="logo.png" alt="Logo" class="logo" />
         </div>
     </header>
 
@@ -357,16 +357,19 @@
         let cropper = null;
         let finalCutoutUrl = null;
 
-        // Poster template image (Mocking poster-template.png)
+        // Poster template image (Reference restored to your file: poster-template.png)
         const poster = new Image();
-        // Placeholder image URL that matches the color scheme of the sample poster
-        poster.src = 'https://placehold.co/1000x1000/333333/F5F0F0?text=Poster+Template+Loaded'; 
+        poster.crossOrigin = 'Anonymous'; // Needed if template is hosted
+        poster.src = 'poster-template.png'; 
 
         let uploadedImage = null; // This will hold the transparent image object after API call
-        let imageX = 50; // Default position
-        let imageY = 640; // Default position (canvas.height - photoHeight - 50)
+        
+        // --- RESTORED ORIGINAL POSITIONS ---
+        let imageX = 30; 
+        let imageY = 640; 
         const photoWidth = 520;
         const photoHeight = 520;
+        // -----------------------------------
 
         let isDragging = false;
         let dragOffsetX = 0;
@@ -390,32 +393,37 @@
         }
 
 
-        // --- Canvas and Drawing Logic (Modified from script3.js) ---
+        // --- Canvas and Drawing Logic (Restored from script3.js) ---
 
         poster.onload = () => {
             canvas.width = 1000;
             canvas.height = 1000;
-            // Draw initial template load message or poster
+            // Draw initial template (will draw only the poster if uploadedImage is null)
             drawPoster();
         };
+        
+        poster.onerror = () => {
+             statusMessage.textContent = "ত্রুটি: 'poster-template.png' ফাইলটি লোড করা যায়নি।";
+        }
+
 
         function drawPoster() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // 1. Draw the Base Template Image (Mocking poster-template.png)
+            // 1. Draw the Base Template Image (poster-template.png)
             ctx.drawImage(poster, 0, 0, canvas.width, canvas.height);
             
-            // 2. Draw the AI-Processed Transparent Subject Image
-            if (uploadedImage && uploadedImage.complete) {
+            // 2. Draw the AI-Processed Transparent Subject Image (Restored original drawing logic)
+            if (uploadedImage) {
                 // Draw white border first
-                const borderPadding = 10; // Increased border for visibility
-                ctx.lineWidth = 10;
+                const borderPadding = 2; // Original logic had 2px padding on strokeRect, leading to 4px total border
+                ctx.lineWidth = borderPadding * 2; 
                 ctx.strokeStyle = "white";
                 
-                // Shadow for depth
+                // Shadow for depth (Retained the shadow effect for better visuals)
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.shadowBlur = 20;
-                ctx.shadowOffsetX = 5;
-                ctx.shadowOffsetY = 5;
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 3;
+                ctx.shadowOffsetY = 3;
 
                 ctx.strokeRect(
                     imageX - borderPadding,
@@ -436,7 +444,7 @@
         }
 
 
-        // --- Cropping, Upload, and API Flow ---
+        // --- Cropping, Upload, and API Flow (Integrated) ---
 
         imageUpload.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -444,6 +452,7 @@
                 statusMessage.textContent = "ছবি ক্রপ করার জন্য অপেক্ষা করছে...";
                 const reader = new FileReader();
                 reader.onload = function(event) {
+                    // Show Cropping Modal
                     cropModal.style.display = 'flex';
                     cropImage.src = event.target.result;
                     cropBtn.disabled = false;
@@ -452,7 +461,7 @@
                         cropper.destroy();
                     }
                     
-                    // Initialize Cropper.js (4:5 ratio)
+                    // Initialize Cropper.js (4:5 ratio requested by user for the canvas)
                     cropper = new Cropper(cropImage, {
                         aspectRatio: 4 / 5, 
                         viewMode: 1, 
@@ -471,21 +480,21 @@
                 cropBtn.disabled = true;
                 statusMessage.textContent = "ছবি ক্রপ করা হচ্ছে...";
 
-                // 1. Get cropped data URL (PNG format for API input)
+                // 1. Get cropped file
                 const croppedDataUrl = cropper.getCroppedCanvas({
-                    width: 800, 
-                    height: 1000,
+                    width: photoWidth, // Use canvas photo size for best fit
+                    height: photoHeight,
                 }).toDataURL('image/png');
 
                 // 2. Convert Data URL to a File object for API upload
                 const croppedFile = dataURLtoFile(croppedDataUrl, 'cropped_subject.png');
 
-                // 3. Hide the modal and destroy cropper instance
+                // 3. Hide the modal
                 cropModal.style.display = 'none';
                 cropper.destroy();
                 cropper = null;
 
-                // 4. Call the API
+                // 4. Call the API (This is the new function)
                 await sendForBackgroundRemoval(croppedFile);
             }
         });
@@ -503,7 +512,7 @@
                 let response = null;
                 const maxRetries = 3;
 
-                // Exponential Backoff for robust API communication
+                // Exponential Backoff
                 for (let i = 0; i < maxRetries; i++) {
                     try {
                         response = await fetch(API_ENDPOINT, {
@@ -543,10 +552,13 @@
                 if (processedImageUrl) {
                     finalCutoutUrl = processedImageUrl;
                     
-                    // Set the processed transparent image as the uploadedImage object
+                    // Load the transparent image into the global uploadedImage variable (RESTORING ORIGINAL FLOW)
                     uploadedImage = new Image();
                     uploadedImage.crossOrigin = 'Anonymous';
                     uploadedImage.onload = () => {
+                        // Restore default positioning for the new image
+                        imageX = 30; 
+                        imageY = 640; 
                         drawPoster(); // Redraw poster with the new transparent image
                         downloadBtn.disabled = false;
                         statusMessage.textContent = "পোস্টার তৈরি সম্পন্ন! ডাউনলোড করার জন্য প্রস্তুত।";
@@ -573,7 +585,7 @@
         }
 
 
-        // --- Dragging Logic (From script3.js) ---
+        // --- Dragging Logic (Restored from script3.js) ---
 
         canvas.addEventListener('mousedown', (e) => {
             const rect = canvas.getBoundingClientRect();
@@ -647,7 +659,7 @@
         });
 
 
-        // --- Download Logic (From script3.js) ---
+        // --- Download Logic (Restored from script3.js) ---
 
         downloadBtn.addEventListener('click', () => {
             if (!finalCutoutUrl) {
