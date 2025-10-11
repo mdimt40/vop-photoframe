@@ -330,27 +330,27 @@
         });
 
         cropBtn.addEventListener('click', async () => {
-            if (!cropper) return;
+            if (cropper) {
+                cropBtn.disabled = true;
+                statusMessage.textContent = "ছবি ক্রপ করা হচ্ছে...";
 
-            cropBtn.disabled = true;
-            statusMessage.textContent = "ছবি ক্রপ করা হচ্ছে...";
+                // 1. Get cropped data URL (PNG format for best quality)
+                const croppedDataUrl = cropper.getCroppedCanvas({
+                    width: 800, // Processed crop size for better quality
+                    height: 1000,
+                }).toDataURL('image/png');
 
-            // 1. Get cropped data URL (PNG format for best quality)
-            const croppedDataUrl = cropper.getCroppedCanvas({
-                width: 800, // Processed crop size for better quality
-                height: 1000,
-            }).toDataURL('image/png');
+                // 2. Convert Data URL to a File object for API upload
+                const croppedFile = dataURLtoFile(croppedDataUrl, 'cropped_subject.png');
 
-            // 2. Convert Data URL to a File object for API upload
-            const croppedFile = dataURLtoFile(croppedDataUrl, 'cropped_subject.png');
+                // 3. Hide the modal and destroy cropper instance
+                cropModal.style.display = 'none';
+                cropper.destroy();
+                cropper = null;
 
-            // 3. Hide the modal and destroy cropper instance
-            cropModal.style.display = 'none';
-            cropper.destroy();
-            cropper = null;
-
-            // 4. Call the API
-            await sendForBackgroundRemoval(croppedFile);
+                // 4. Call the API
+                await sendForBackgroundRemoval(croppedFile);
+            }
         });
 
 
