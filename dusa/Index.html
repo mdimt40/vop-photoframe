@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DUSA | ২৫ বছর পূর্তি পোস্টার</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CropperJS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background: #fffaf9;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border-top: 6px solid #d62828;
+    }
+
+    h2 {
+      color: #d62828;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 100%;
+      border: 2px dashed #d62828;
+      border-radius: 12px;
+      margin: 20px 0;
+      background: #f8f8f8;
+    }
+
+    .btn, .upload-label {
+      background: linear-gradient(135deg, #d62828, #b22222);
+      color: #fff;
+      padding: 12px 26px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      font-weight: 600;
+      margin: 8px;
+      display: inline-block;
+    }
+
+    .btn:hover, .upload-label:hover {
+      transform: scale(1.05);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    /* Crop Modal */
+    #cropModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #cropBox {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    #cropImage {
+      max-width: 100%;
+      max-height: 70vh;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>একসাথে পথচলার ২৫ বছর</h2>
+  <p>দুমকী উপজেলা স্টুডেন্টস এসোসিয়েশন (DUSA)</p>
+
+  <label class="upload-label">
+    ছবি আপলোড করুন
+    <input type="file" id="imageUpload" accept="image/*">
+  </label>
+
+  <canvas id="canvas" width="1000" height="1000"></canvas>
+
+  <button class="btn" id="downloadBtn">পোস্টার ডাউনলোড করুন</button>
+</div>
+
+<!-- Crop Modal -->
+<div id="cropModal">
+  <div id="cropBox">
+    <img id="cropImage">
+    <br><br>
+    <button class="btn" id="cropBtn">Crop & Apply</button>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const imageUpload = document.getElementById('imageUpload');
+  const cropModal = document.getElementById('cropModal');
+  const cropImage = document.getElementById('cropImage');
+  const cropBtn = document.getElementById('cropBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  let cropper;
+  let userImage = new Image();
+
+  // Load DUSA Anniversary Frame
+  const frame = new Image();
+  frame.src = 'dusa-25-frame.png'; // <-- YOUR FRAME IMAGE
+
+  frame.onload = drawPoster;
+
+  imageUpload.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      cropImage.src = reader.result;
+      cropModal.style.display = 'flex';
+
+      cropImage.onload = () => {
+        if (cropper) cropper.destroy();
+        cropper = new Cropper(cropImage, {
+          aspectRatio: 1,
+          viewMode: 1
+        });
+      };
+    };
+    reader.readAsDataURL(file);
+  });
+
+  cropBtn.addEventListener('click', () => {
+    const croppedCanvas = cropper.getCroppedCanvas({
+      width: 1000,
+      height: 1000
+    });
+
+    userImage.src = croppedCanvas.toDataURL('image/png');
+    userImage.onload = drawPoster;
+
+    cropModal.style.display = 'none';
+    cropper.destroy();
+  });
+
+  function drawPoster() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw user photo first
+    if (userImage.src) {
+      ctx.drawImage(userImage, 0, 0, 1000, 1000);
+    }
+
+    // Draw frame on top
+    ctx.drawImage(frame, 0, 0, 1000, 1000);
+  }
+
+  downloadBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'DUSA_25_Years.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+</script>
+
+</body>
+</html>
