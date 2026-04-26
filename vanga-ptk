@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ভাঙ্গা টু পটুয়াখালী ৬ লেন — Voice of Patuakhali</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red: #C8102E;
+  --red-dark: #9B0B22;
+  --white: #ffffff;
+  --cream: #FFF8F5;
+  --dark: #1f1f1f;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-soft: #faf7f6;
+  --border: #eadfdd;
+  --text: #1f1f1f;
+  --muted: #6f6f6f;
+}
+
+body {
+  background: linear-gradient(180deg, #ffffff 0%, #fffaf9 100%);
+  font-family: 'Hind Siliguri', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+header {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(200,16,46,0.08);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo-wrap { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, #fff 0%, #fff4f5 100%);
+  border-radius: 8px;
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  object-fit: contain;
+  padding: 0;
+}
+.logo-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 900;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text); line-height: 1.1;
+}
+.logo-text small {
+  display: block; font-size: 10px;
+  letter-spacing: 3px; opacity: 0.85; font-weight: 700;
+}
+.header-tag {
+  background: #fff5f7;
+  border: 1px solid #f0c8cf;
+  color: var(--red);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── HERO ────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #fff 0%, #fff7f8 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 24px 48px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-block;
+  background: #fff5f7;
+  border: 1px solid #f0c8cf;
+  color: var(--red);
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 1px;
+  padding: 6px 20px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(22px, 5vw, 40px);
+  font-weight: 900;
+  line-height: 1.4;
+  color: var(--text);
+  max-width: 800px;
+  margin: 0 auto 20px;
+}
+.hero h1 .red { color: var(--red); }
+.hero-desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.9;
+  max-width: 680px;
+  margin: 0 auto 28px;
+}
+.hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.hero-point {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 18px rgba(31,31,31,0.04);
+}
+.hero-point .dot {
+  width: 8px; height: 8px;
+  background: var(--red);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────────── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ── SAMPLE PREVIEW ──────────────────────────────────────────── */
+.sample-preview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 28px rgba(31,31,31,0.05);
+}
+.sample-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 28px rgba(31,31,31,0.08);
+}
+
+/* ── HOW-TO SECTION ──────────────────────────────────────────── */
+.howto-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 8px 28px rgba(31,31,31,0.05);
+}
+.section-title {
+  font-size: 18px; font-weight: 900;
+  color: var(--red);
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+.step-card {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 16px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.step-num {
+  width: 32px; height: 32px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 900;
+  color: #fff;
+}
+.step-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+/* ── POSTER TOOL ─────────────────────────────────────────────── */
+.tool-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(31,31,31,0.06);
+}
+.tool-header {
+  background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 16px; font-weight: 900; letter-spacing: 1px;
+}
+.tool-body { padding: 28px 24px; display: flex; flex-direction: column; gap: 20px; }
+
+/* Upload */
+.upload-zone {
+  border: 2px dashed #e4c9cf;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  background: #fff;
+  transition: background 0.2s, border-color 0.2s;
+}
+.upload-zone:hover, .upload-zone.drag-over { background: #fff7f8; border-color: var(--red); }
+.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-zone .uicon { font-size: 44px; margin-bottom: 12px; }
+.upload-zone h3 { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+.upload-zone p { font-size: 13px; color: var(--muted); }
+
+/* Crop canvas */
+.crop-stage { display: none; flex-direction: column; gap: 14px; align-items: center; }
+.crop-stage.visible { display: flex; }
+.crop-lbl { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--red); font-weight: 700; align-self: flex-start; font-family: 'Barlow Condensed', sans-serif; }
+#cropCanvas { border: 2px solid var(--red); border-radius: 8px; display: block; max-width: 100%; touch-action: none; cursor: crosshair; }
+.crop-hint { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-align: center; }
+.crop-hint b { color: var(--red); }
+
+/* Preview */
+.preview-stage { display: none; flex-direction: column; gap: 14px; align-items: center; }
+.preview-stage.visible { display: flex; }
+#outputCanvas { max-width: 100%; border-radius: 8px; border: 3px solid var(--red); box-shadow: 0 8px 40px rgba(200,16,46,0.3); }
+
+/* Buttons */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 900;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 12px 26px; border-radius: 6px;
+  border: none; cursor: pointer; transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-red  { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-dark); }
+.btn-ghost { background: #fff; color: var(--red); border: 2px solid var(--red); }
+.btn-ghost:hover { background: #fff5f7; }
+.btn-dl {
+  font-size: 18px; padding: 16px 40px;
+  background: var(--red); color: #fff;
+  box-shadow: 0 4px 24px rgba(200,16,46,0.45);
+}
+.btn-dl:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+/* Step dots */
+.step-dots { display: flex; gap: 8px; align-items: center; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 2px; color: #444; }
+.sdot { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--red); color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; }
+.sdot.on { background: var(--red); color: #fff; }
+
+/* ── HASHTAGS ─────────────────────────────────────────────────── */
+.hashtag-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 8px 28px rgba(31,31,31,0.05);
+}
+.tags-wrap { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.tag {
+  background: #fff5f7;
+  border: 1px solid #f0c8cf;
+  color: var(--red);
+  font-size: 13px; font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.5px;
+}
+.tag:hover { background: #ffe9ed; }
+.copy-notice { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.copy-notice span { color: var(--red); }
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+footer {
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  text-align: center;
+}
+footer p { font-size: 13px; color: var(--muted); }
+footer p span { color: var(--red); font-weight: 700; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero { padding: 36px 16px 32px; }
+  .tool-body { padding: 20px 14px; }
+  .howto-card { padding: 24px 16px; }
+  .hashtag-section { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <img class="logo-mark" src="https://mdimt40.github.io/vop-photoframe/logo.png" alt="Voice of Patuakhali logo">
+      <div class="logo-text">Voice of Patuakhali<small>Campaign • পোস্টার তৈরি করুন</small></div>
+    </div>
+    <div class="header-tag">🔴 Live Campaign</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🔴 দাবি পোস্টার ক্যাম্পেইন</div>
+  <h1>ভাঙ্গা টু পটুয়াখালী<br><span class="red">দ্রুত ৬ লেনের সড়ক বাস্তবায়ন চাই</span></h1>
+  <p class="hero-desc">
+    দক্ষিণাঞ্চলের মানুষের যাতায়াত সহজ করতে এবং অর্থনৈতিক উন্নয়ন ত্বরান্বিত করতে
+    ভাঙ্গা টু পটুয়াখালী সড়ককে দ্রুত ৬ লেনে উন্নীত করা এখন সময়ের দাবি।
+  </p>
+  <div class="hero-points">
+    <div class="hero-point"><span class="dot"></span> যাতায়াত সময় আরও কমবে</div>
+    <div class="hero-point"><span class="dot"></span> ব্যবসা-বাণিজ্য দ্রুত বৃদ্ধি পাবে</div>
+    <div class="hero-point"><span class="dot"></span> পর্যটন খাত ব্যাপকভাবে উন্নত হবে</div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page">
+
+  <!-- SAMPLE PREVIEW -->
+  <div class="sample-preview">
+    <div class="section-title">✨ Final Look Preview</div>
+    <img src="sample.png" alt="Final design preview">
+  </div>
+
+  <!-- HOW TO -->
+  <div class="howto-card">
+    <div class="section-title">🖼️ কিভাবে পোস্টার তৈরি করবেন</div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">১</div>
+        <p>নিচে <b>Upload Image</b> এ ক্লিক করুন এবং আপনার ছবি বেছে নিন</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">২</div>
+        <p>ছবির crop বক্স টেনে সাজিয়ে নিন। ১:১ বা ৪:৫ সাইজ সবচেয়ে ভালো হয়।</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">৩</div>
+        <p><b>Generate Poster</b> চাপুন — ডিজাইন পছন্দ হলে <b>Download</b> করুন</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">৪</div>
+        <p>ফেসবুকে পোস্ট করুন এবং <b>Voice of Patuakhali</b> পেজ মেনশন করুন</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSTER TOOL -->
+  <div class="tool-wrap">
+    <div class="tool-header">
+      🎨 পোস্টার তৈরি করুন
+      <span style="margin-left:auto">
+        <span class="step-dots">
+          <span class="sdot on" id="d1">১</span>
+          <span style="color:#333">—</span>
+          <span class="sdot" id="d2">২</span>
+          <span style="color:#333">—</span>
+          <span class="sdot" id="d3">৩</span>
+        </span>
+      </span>
+    </div>
+
+    <div class="tool-body">
+
+      <!-- Upload -->
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept="image/*">
+        <div class="uicon">📷</div>
+        <h3>Upload Image</h3>
+        <p>ক্লিক করুন অথবা ছবি টেনে ছাড়ুন · JPG · PNG · WEBP</p>
+      </div>
+
+      <!-- Crop -->
+      <div class="crop-stage" id="cropStage">
+        <div class="crop-lbl">✂ ছবি crop করুন — অনুপাত স্বয়ংক্রিয় লক</div>
+        <canvas id="cropCanvas"></canvas>
+        <div class="crop-hint">বক্সের ভেতর টেনে সরান · <b>কোণা</b> টেনে রিসাইজ করুন</div>
+        <div class="btn-row">
+          <button class="btn btn-red" onclick="applyCrop()">✓ Generate Poster</button>
+          <button class="btn btn-ghost" onclick="resetCrop()">↺ Reset</button>
+          <button class="btn btn-ghost" onclick="changePhoto()">⬆ Change Photo</button>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-stage" id="previewStage">
+        <div class="crop-lbl" style="align-self:center">✅ পোস্টার তৈরি!</div>
+        <canvas id="outputCanvas"></canvas>
+        <div class="btn-row">
+          <button class="btn btn-dl" onclick="downloadPoster()">⬇ Download Poster</button>
+          <button class="btn btn-ghost" onclick="goBack()">✂ Re-crop</button>
+          <button class="btn btn-ghost" onclick="startOver()">↺ Start Over</button>
+        </div>
+        <p style="font-size:12px;color:#6f6f6f;text-align:center;">Full resolution · 3264 × 3264 px · PNG</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HASHTAGS -->
+  <div class="hashtag-section">
+    <div class="section-title">🔖 হ্যাশট্যাগ কপি করুন</div>
+    <div class="tags-wrap" id="tagsWrap">
+      <div class="tag" onclick="copyTag(this)">#ভাঙ্গা_টু_পটুয়াখালী_৬লেন_চাই</div>
+      <div class="tag" onclick="copyTag(this)">#Bhanga_to_Patuakhali_6lane</div>
+      <div class="tag" onclick="copyTag(this)">#voice_of_patuakhali</div>
+      <div class="tag" onclick="copyTag(this)">#পটুয়াখালী</div>
+      <div class="tag" onclick="copyTag(this)">#৬লেন_সড়ক</div>
+      <div class="tag" onclick="copyTag(this)">#দক্ষিণাঞ্চল_উন্নয়ন</div>
+    </div>
+    <div class="copy-notice" id="copyNotice">হ্যাশট্যাগে ক্লিক করলে <span>কপি</span> হয়ে যাবে</div>
+    <div style="margin-top:16px;padding:14px;background:#fff7f8;border-radius:8px;border:1px solid #f0c8cf;">
+      <p style="font-size:13px;color:#6f6f6f;margin-bottom:8px;font-weight:700;">📢 পোস্টে লিখুন:</p>
+      <p style="font-size:14px;color:#333;line-height:1.9;">
+        🔴 ভাঙ্গা টু পটুয়াখালী দ্রুত ৬ লেনের সড়ক বাস্তবায়ন চাই<br>
+        📢 Voice of Patuakhali পেজ মেনশন করতে ভুলবেন না।<br>
+        #ভাঙ্গা_টু_পটুয়াখালী_৬লেন_চাই #Bhanga_to_Patuakhali_6lane #voice_of_patuakhali
+      </p>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  <p>Powered by <span>Voice of Patuakhali</span> · দক্ষিণাঞ্চলের কণ্ঠস্বর</p>
+</footer>
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────
+const CANVAS_W = 3264, CANVAS_H = 3264;
+const SLOT     = { x: 361, y: 1463, w: 1486, h: 1615 };
+const RATIO    = SLOT.w / SLOT.h; // 1486/1615 ≈ 0.9202
+const MIN_BOX  = 50;
+const HIT_R    = 20;
+
+// ── State ─────────────────────────────────────────────────────────────
+let srcImg     = null;
+let overlayImg = null;
+let box        = { x:0, y:0, w:0, h:0 };
+let cvW = 0, cvH = 0;
+let drag = null, startPtr = null, startBox = null;
+
+// Load campaign.png overlay
+(function(){
+  const img = new Image();
+  img.onload = () => overlayImg = img;
+  img.src    = 'campaign.png';
+})();
+
+// ── Upload ────────────────────────────────────────────────────────────
+document.getElementById('fileInput').addEventListener('change', e => {
+  if (e.target.files[0]) readFile(e.target.files[0]);
+});
+const uploadZone = document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover',  e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault(); uploadZone.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
+});
+
+function readFile(f) {
+  if (!f.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      srcImg = img;
+      uploadZone.style.display = 'none';
+      showEl('cropStage');
+      setStep(2);
+      requestAnimationFrame(initCropCanvas);
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(f);
+}
+
+// ── Crop canvas ───────────────────────────────────────────────────────
+const cc  = document.getElementById('cropCanvas');
+const ctx = cc.getContext('2d');
+
+function initCropCanvas() {
+  // Canvas display size: fit image inside available width, max 520px tall
+  const maxW = Math.min(cc.parentElement.clientWidth - 4, 820);
+  const maxH = 520;
+  const iRatio = srcImg.naturalWidth / srcImg.naturalHeight;
+
+  let cw, ch;
+  if (iRatio >= maxW / maxH) { cw = maxW;           ch = Math.round(cw / iRatio); }
+  else                        { ch = maxH;           cw = Math.round(ch * iRatio); }
+
+  // Canvas internal resolution = display size (1:1 CSS px mapping)
+  cc.width  = cw; cc.height = ch;
+  cc.style.width  = cw + 'px';
+  cc.style.height = ch + 'px';
+  cvW = cw; cvH = ch;
+
+  resetCrop();
+}
+
+function resetCrop() {
+  // Largest RATIO-locked box centred in canvas
+  let w = cvW, h = w / RATIO;
+  if (h > cvH) { h = cvH; w = h * RATIO; }
+  box = { x: (cvW - w) / 2, y: (cvH - h) / 2, w, h };
+  render();
+}
+
+function render() {
+  ctx.clearRect(0, 0, cvW, cvH);
+  // Image — drawn to fill the canvas exactly (canvas already matches image ratio)
+  ctx.drawImage(srcImg, 0, 0, cvW, cvH);
+
+  // Dim outside crop
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  ctx.fillRect(0,       0,      cvW,       box.y);
+  ctx.fillRect(0,       box.y + box.h, cvW, cvH - box.y - box.h);
+  ctx.fillRect(0,       box.y, box.x,    box.h);
+  ctx.fillRect(box.x + box.w, box.y, cvW - box.x - box.w, box.h);
+
+  // Crop box border
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+  ctx.strokeRect(box.x, box.y, box.w, box.h);
+
+  // Rule-of-thirds
+  ctx.strokeStyle = 'rgba(255,255,255,0.22)'; ctx.lineWidth = 1;
+  for (let i = 1; i < 3; i++) {
+    const lx = box.x + box.w / 3 * i;
+    const ly = box.y + box.h / 3 * i;
+    ctx.beginPath(); ctx.moveTo(lx, box.y);      ctx.lineTo(lx, box.y + box.h); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(box.x, ly);       ctx.lineTo(box.x + box.w, ly); ctx.stroke();
+  }
+
+  // Corner handles
+  const corners = [
+    [box.x,        box.y       ],
+    [box.x + box.w, box.y      ],
+    [box.x,        box.y + box.h],
+    [box.x + box.w, box.y + box.h],
+  ];
+  corners.forEach(([cx2, cy2]) => {
+    ctx.beginPath(); ctx.arc(cx2, cy2, 8, 0, Math.PI * 2);
+    ctx.fillStyle = '#C8102E'; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+  });
+
+  // Ratio pill
+  ctx.fillStyle = 'rgba(200,16,46,0.88)';
+  ctx.beginPath();
+  roundRect(ctx, box.x + box.w - 138, box.y + box.h - 26, 132, 20, 4);
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 11px Barlow Condensed, sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('অনুপাত লক ✓', box.x + box.w - 72, box.y + box.h - 16);
+}
+
+function roundRect(c, x, y, w, h, r) {
+  c.moveTo(x+r, y); c.lineTo(x+w-r, y);
+  c.quadraticCurveTo(x+w,y,x+w,y+r);
+  c.lineTo(x+w,y+h-r); c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  c.lineTo(x+r,y+h); c.quadraticCurveTo(x,y+h,x,y+h-r);
+  c.lineTo(x,y+r); c.quadraticCurveTo(x,y,x+r,y);
+  c.closePath();
+}
+
+// ── Pointer events ────────────────────────────────────────────────────
+cc.addEventListener('mousedown',  onDown);
+cc.addEventListener('touchstart', onDown, { passive: false });
+window.addEventListener('mousemove',  onMove);
+window.addEventListener('touchmove',  onMove, { passive: false });
+window.addEventListener('mouseup',   () => { drag = null; cc.style.cursor = 'crosshair'; });
+window.addEventListener('touchend',  () => { drag = null; });
+
+function evPos(e) {
+  const r   = cc.getBoundingClientRect();
+  const src = e.touches ? e.touches[0] : e;
+  // No DPR scaling needed — canvas px == CSS px
+  return { x: src.clientX - r.left, y: src.clientY - r.top };
+}
+
+function hitCorner(p) {
+  const pts = [
+    { id:'tl', x: box.x,        y: box.y        },
+    { id:'tr', x: box.x+box.w,  y: box.y        },
+    { id:'bl', x: box.x,        y: box.y+box.h  },
+    { id:'br', x: box.x+box.w,  y: box.y+box.h  },
+  ];
+  return pts.find(pt => Math.abs(p.x-pt.x) < HIT_R && Math.abs(p.y-pt.y) < HIT_R) || null;
+}
+
+function onDown(e) {
+  e.preventDefault();
+  const p = evPos(e);
+  startPtr = p; startBox = { ...box };
+  const c = hitCorner(p);
+  if (c) {
+    drag = { type:'resize', corner: c.id };
+    cc.style.cursor = { tl:'nw-resize', tr:'ne-resize', bl:'sw-resize', br:'se-resize' }[c.id];
+  } else if (p.x > box.x && p.x < box.x+box.w && p.y > box.y && p.y < box.y+box.h) {
+    drag = { type:'move' };
+    cc.style.cursor = 'grab';
+  }
+}
+
+function onMove(e) {
+  if (!drag) return;
+  e.preventDefault();
+  const p  = evPos(e);
+  const dx = p.x - startPtr.x;
+  const dy = p.y - startPtr.y;
+
+  if (drag.type === 'move') {
+    box.x = clamp(startBox.x + dx, 0, cvW - box.w);
+    box.y = clamp(startBox.y + dy, 0, cvH - box.h);
+  } else {
+    resize(drag.corner, dx, dy);
+  }
+  render();
+}
+
+function resize(corner, dx, dy) {
+  let { x, y, w, h } = startBox;
+
+  if (corner === 'br') {
+    w = clamp(w + dx, MIN_BOX, cvW - x);
+    h = w / RATIO;
+    if (y + h > cvH) { h = cvH - y; w = h * RATIO; }
+  } else if (corner === 'bl') {
+    w = clamp(w - dx, MIN_BOX, x + w);
+    h = w / RATIO;
+    x = startBox.x + startBox.w - w;
+    if (x < 0) { x = 0; w = startBox.x + startBox.w; h = w / RATIO; }
+    if (y + h > cvH) { h = cvH - y; w = h * RATIO; x = startBox.x + startBox.w - w; }
+  } else if (corner === 'tr') {
+    w = clamp(w + dx, MIN_BOX, cvW - x);
+    h = w / RATIO;
+    y = startBox.y + startBox.h - h;
+    if (y < 0) { y = 0; h = startBox.y + startBox.h; w = h * RATIO; }
+  } else if (corner === 'tl') {
+    w = clamp(w - dx, MIN_BOX, x + w);
+    h = w / RATIO;
+    x = startBox.x + startBox.w - w;
+    y = startBox.y + startBox.h - h;
+    if (x < 0) { x = 0; w = startBox.x + startBox.w; h = w / RATIO; y = startBox.y + startBox.h - h; }
+    if (y < 0) { y = 0; h = startBox.y + startBox.h; w = h * RATIO; x = startBox.x + startBox.w - w; }
+  }
+  box = { x, y, w, h };
+}
+
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+// ── Apply crop & render poster ─────────────────────────────────────────
+function applyCrop() {
+  // box is already in canvas px == display px (no DPR scaling needed)
+  // Map to natural image coords
+  const scX = srcImg.naturalWidth  / cvW;
+  const scY = srcImg.naturalHeight / cvH;
+  const sx = box.x * scX, sy = box.y * scY;
+  const sw = box.w * scX, sh = box.h * scY;
+
+  const out = document.getElementById('outputCanvas');
+  out.width = CANVAS_W; out.height = CANVAS_H;
+  const oc = out.getContext('2d');
+
+  oc.fillStyle = '#FFFFFF';
+  oc.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
+  // 1. User photo — bottom layer
+  oc.drawImage(srcImg, sx, sy, sw, sh, SLOT.x, SLOT.y, SLOT.w, SLOT.h);
+
+  // 2. campaign.png — top layer
+  if (overlayImg) {
+    oc.drawImage(overlayImg, 0, 0, CANVAS_W, CANVAS_H);
+  } else {
+    oc.fillStyle = 'rgba(200,16,46,0.18)';
+    oc.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    oc.fillStyle = '#C8102E';
+    oc.font = 'bold 52px sans-serif';
+    oc.textAlign = 'center'; oc.textBaseline = 'middle';
+    oc.fillText('campaign.png এই HTML ফাইলের পাশে রাখুন', CANVAS_W/2, CANVAS_H/2);
+  }
+
+  hideEl('cropStage');
+  showEl('previewStage');
+  setStep(3);
+  out.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function downloadPoster() {
+  const a = document.createElement('a');
+  a.download = 'bhanga-patuakhali-6lane-poster.png';
+  a.href = document.getElementById('outputCanvas').toDataURL('image/png');
+  a.click();
+}
+
+// ── Nav ────────────────────────────────────────────────────────────────
+function goBack()    { hideEl('previewStage'); showEl('cropStage'); setStep(2); }
+function changePhoto(){ hideEl('cropStage'); uploadZone.style.display=''; document.getElementById('fileInput').value=''; setStep(1); }
+function startOver() { srcImg=null; hideEl('cropStage'); hideEl('previewStage'); uploadZone.style.display=''; document.getElementById('fileInput').value=''; setStep(1); }
+function showEl(id)  { document.getElementById(id).classList.add('visible'); }
+function hideEl(id)  { document.getElementById(id).classList.remove('visible'); }
+function setStep(n)  { [1,2,3].forEach((_, i) => { document.getElementById('d'+(i+1)).classList.toggle('on', i+1 <= n); }); }
+
+// ── Hashtag copy ────────────────────────────────────────────────────────
+function copyTag(el) {
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const n = document.getElementById('copyNotice');
+    n.innerHTML = '<span>' + el.textContent + '</span> কপি হয়েছে ✓';
+    setTimeout(() => { n.innerHTML = 'হ্যাশট্যাগে ক্লিক করলে <span>কপি</span> হয়ে যাবে'; }, 2000);
+  });
+}
+</script>
+</body>
+</html>
